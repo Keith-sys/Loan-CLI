@@ -42,7 +42,7 @@ public class Menu {
     LoanInput mi = new LoanInput();
 
     public void getMenuInput(){
-        MAIN_LOOP:while(isRunning){
+        while(isRunning){
             try {
                 getInput();
 
@@ -53,16 +53,14 @@ public class Menu {
 
                 // Determine the input regardless of it's written in upper case or lower case
                 MenuCommand mc = checkCommand(input.toUpperCase());
-
                 switch (mc) {
                     case MORTGAGE -> mi.getLoanInfo(maxMortgageTerms);
                     case CAR -> mi.getLoanInfo(maxVehicleTerms);
                     case HELP -> showMenu();
-                    case EXIT -> {
-                        break MAIN_LOOP;
-                    }
+                    case EXIT -> isRunning = false;
                     default -> getInput();
                 }
+
             } catch(Exception e){
                 System.out.println("Error: " + e.getMessage() + " caused by " + e.getCause());
             }

@@ -7,19 +7,21 @@ public class LoanInput{
                     paymentAmount,
                     grossIncome;
     private Double interest;
+    private boolean isRunningterms  = true;
     SingletonScanner singletonScanner = SingletonScanner.getInstance();
     Scanner scanner = singletonScanner.getScanner();
 
-    // Check Terms based on the type of loan
+//     Check Terms based on the type of loan
     private void checkTerms(Integer maxTerms){
-        while(true) {
+        while(isRunningterms) {
             if (mustBeLessThanMaxTerms(maxTerms)) {
                 paymentAmount = getPaymentAmount();
-            } else {
+                isRunningterms = false;
+            } else if(ifGreaterThanMaxTerms(maxTerms)){
                 System.out.println("Maximum allowed term is " + maxTerms + " years");
-                getTermsAmount();
+                terms = getTermsAmount();
             }
-            break;
+//                break;
         }
     }
 
@@ -27,10 +29,16 @@ public class LoanInput{
         return terms <= maxTerms;
     }
 
+    private Boolean ifGreaterThanMaxTerms(Integer maxTerms){
+        return terms >= maxTerms;
+    }
+
     public void getLoanInfo(Integer maxTerms){
         principle = getPrincipleAmount();
         terms = getTermsAmount();
         checkTerms(maxTerms);
+
+
         interest = getInterest();
         grossIncome = getGrossIncome();
         Amortization amortization = new Amortization(principle,
