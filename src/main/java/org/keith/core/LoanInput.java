@@ -11,21 +11,24 @@ public class LoanInput{
     Scanner scanner = singletonScanner.getScanner();
 
     // Check Terms based on the type of loan
-    private void checkTerms(int maxTerms){
-        if (mustBeLessThanMaxTerms(maxTerms)) {
-            getPaymentAmount();
-        } else {
-            System.out.println("Maximum allowed term is " + maxTerms + " years");
-            getTermsAmount();
+    private void checkTerms(Integer maxTerms){
+        while(true) {
+            if (mustBeLessThanMaxTerms(maxTerms)) {
+                getPaymentAmount();
+            } else {
+                System.out.println("Maximum allowed term is " + maxTerms + " years");
+                getTermsAmount();
+            }
+            break;
         }
     }
 
-    private Boolean mustBeLessThanMaxTerms(int maxTerms){
+    private Boolean mustBeLessThanMaxTerms(Integer maxTerms){
         return terms <= maxTerms;
     }
 
-    public void getLoanInfo(int maxTerms){
-        getPrincipleAmount();
+    public void getLoanInfo(Integer maxTerms){
+        principle = getPrincipleAmount();
         getTermsAmount();
         checkTerms(maxTerms);
         getInterest();
@@ -38,31 +41,31 @@ public class LoanInput{
         amortization.printEvaluation();
     }
 
-    private void getPrincipleAmount(){
+    private Integer getPrincipleAmount(){
         System.out.print("""
                 Enter your loan information.
                 Loan amount:\s""");
-        principle = scanner.nextInt();
+        return Integer.parseInt(scanner.nextLine());
     }
 
     private void getTermsAmount(){
         System.out.print("Terms(year): ");
-        terms = scanner.nextInt();
+        terms = Integer.parseInt(scanner.nextLine());
     }
 
     private void getPaymentAmount(){
         System.out.print("Number of payments in a single year: ");
-        paymentAmount = scanner.nextInt();
+        paymentAmount = Integer.parseInt(scanner.nextLine());
     }
 
     private void getInterest(){
         System.out.print("Interest rate: ");
-        interest = scanner.nextDouble();
+        interest = Double.parseDouble(scanner.nextLine());
     }
 
     private void getGrossIncome(){
         System.out.print("Gross income: ");
-        grossIncome = scanner.nextInt();
-        scanner.nextLine();
+        grossIncome = Integer.parseInt(scanner.nextLine());
+//        scanner.nextLine();
     }
 }

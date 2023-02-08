@@ -16,9 +16,8 @@ The containing feature are:
 ## Build Instructions
 Step 1) Build source files
 ```
-javac src/main/java/org/keith/core/*.java src/main/java/org/keith/menu/*.java src/main/java/org/keith/menu/enums/*.java  src/main/java/org/keith/*.java -d bin
+javac -cp "<lombok_path>" src/main/java/org/keith/core/*.java src/main/java/org/keith/menu/*.java src/main/java/org/keith/menu/enums/*.java  src/main/java/org/keith/*.java -d bin
 ```
-
 Step 2) Run the program
 ```
 cd bin
