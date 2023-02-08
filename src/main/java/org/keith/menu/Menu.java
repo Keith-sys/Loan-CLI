@@ -25,7 +25,7 @@ public class Menu {
                 """);
     }
     public final String WELCOME_MSG = """
-    LOAN CLI v1.0.0
+    LOAN CLI v1.0.2
     © Keith Atmodimedjo
     Type "help" to list command options.
     """;

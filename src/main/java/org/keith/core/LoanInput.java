@@ -14,7 +14,7 @@ public class LoanInput{
     private void checkTerms(Integer maxTerms){
         while(true) {
             if (mustBeLessThanMaxTerms(maxTerms)) {
-                getPaymentAmount();
+                paymentAmount = getPaymentAmount();
             } else {
                 System.out.println("Maximum allowed term is " + maxTerms + " years");
                 getTermsAmount();
@@ -29,10 +29,10 @@ public class LoanInput{
 
     public void getLoanInfo(Integer maxTerms){
         principle = getPrincipleAmount();
-        getTermsAmount();
+        terms = getTermsAmount();
         checkTerms(maxTerms);
-        getInterest();
-        getGrossIncome();
+        interest = getInterest();
+        grossIncome = getGrossIncome();
         Amortization amortization = new Amortization(principle,
                                                      terms,
                                                      paymentAmount,
@@ -48,24 +48,25 @@ public class LoanInput{
         return Integer.parseInt(scanner.nextLine());
     }
 
-    private void getTermsAmount(){
+    private Integer getTermsAmount(){
         System.out.print("Terms(year): ");
-        terms = Integer.parseInt(scanner.nextLine());
+        return Integer.parseInt(scanner.nextLine());
     }
 
-    private void getPaymentAmount(){
+    private Integer getPaymentAmount(){
         System.out.print("Number of payments in a single year: ");
-        paymentAmount = Integer.parseInt(scanner.nextLine());
+        return Integer.parseInt(scanner.nextLine());
     }
 
-    private void getInterest(){
+    private Double getInterest(){
         System.out.print("Interest rate: ");
-        interest = Double.parseDouble(scanner.nextLine());
+        return Double.parseDouble(scanner.nextLine());
     }
 
-    private void getGrossIncome(){
+    private Integer getGrossIncome(){
+
         System.out.print("Gross income: ");
-        grossIncome = Integer.parseInt(scanner.nextLine());
+        return Integer.parseInt(scanner.nextLine());
 //        scanner.nextLine();
     }
 }
