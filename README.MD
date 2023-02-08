@@ -4,6 +4,7 @@ A demo program for calculating and evaluating your loan using the [amortization]
 ## Requirements
 The requirements for the project is:
 - [Oracle JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+- [Lombok](https://projectlombok.org/)
 
 ## Features
 The containing feature are:
@@ -21,7 +22,7 @@ javac -cp "<lombok_path>" src/main/java/org/keith/core/*.java src/main/java/org/
 Step 2) Run the program
 ```
 cd bin
-java io.keith.Main
+java org.keith.Main
 ```
 
 Optionally, you can create an executable JAR file:
