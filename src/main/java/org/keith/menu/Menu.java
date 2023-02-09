@@ -3,7 +3,6 @@ package org.keith.menu;
 import org.keith.core.LoanInput;
 import org.keith.core.SingletonScanner;
 import org.keith.menu.enums.MenuCommand;
-import java.util.Scanner;
 
 public class Menu {
     private final String MENU = """
@@ -25,7 +24,7 @@ public class Menu {
                 """);
     }
     public final String WELCOME_MSG = """
-    LOAN CLI v1.0.2
+    LOAN CLI v1.0.3
     © Keith Atmodimedjo
     Type "help" to list command options.
     """;
@@ -42,9 +41,9 @@ public class Menu {
     LoanInput mi = new LoanInput();
 
     public void getMenuInput(){
-        while(isRunning){
+        MAIN_LOOP:while(isRunning){
             try {
-                getInput();
+                input = getInput();
 
                 // if input is empty continue to print the option number message above
                 if (ifInputIsEmpty()) {
@@ -57,7 +56,9 @@ public class Menu {
                     case MORTGAGE -> mi.getLoanInfo(maxMortgageTerms);
                     case CAR -> mi.getLoanInfo(maxVehicleTerms);
                     case HELP -> showMenu();
-                    case EXIT -> isRunning = false;
+                    case EXIT -> {
+                        break MAIN_LOOP;
+                    }
                     default -> getInput();
                 }
 
@@ -85,10 +86,8 @@ public class Menu {
         System.out.print(MENU);
     }
 
-    public void getInput(){
+    public String getInput(){
         SingletonScanner singletonScanner = SingletonScanner.getInstance();
-        Scanner scanner = singletonScanner.getScanner();
-        System.out.print(cmdLine);
-        input = scanner.nextLine();
+        return singletonScanner.getString(cmdLine);
     }
 }

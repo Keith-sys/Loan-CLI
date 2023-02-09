@@ -1,5 +1,4 @@
 package org.keith.core;
-import java.util.Scanner;
 
 public class LoanInput{
     private Integer principle ,
@@ -7,38 +6,35 @@ public class LoanInput{
                     paymentAmount,
                     grossIncome;
     private Double interest;
-    private boolean isRunningterms  = true;
+    private final String paymentAmountInput =  "Number of payments in a single year: ",
+                         principleInput = "Loan amount: ",
+                         termsInput =  "Terms(year): ",
+                         grossIncomeInput = "Gross income: ",
+                         interestInput = "Interest rate: ";
+    private boolean isRunningTerms = true;
     SingletonScanner singletonScanner = SingletonScanner.getInstance();
-    Scanner scanner = singletonScanner.getScanner();
 
 //     Check Terms based on the type of loan
     private void checkTerms(Integer maxTerms){
-        while(isRunningterms) {
-            if (mustBeLessThanMaxTerms(maxTerms)) {
-                paymentAmount = getPaymentAmount();
-                isRunningterms = false;
-            } else if(ifGreaterThanMaxTerms(maxTerms)){
-                System.out.println("Maximum allowed term is " + maxTerms + " years");
-                terms = getTermsAmount();
+        while(isRunningTerms) {
+            terms = getTermsAmount();
+
+            if(checkIfLessThanMaxTerms(maxTerms)){
+                break;
             }
-//                break;
         }
     }
 
-    private Boolean mustBeLessThanMaxTerms(Integer maxTerms){
+    private Boolean checkIfLessThanMaxTerms(Integer maxTerms){
         return terms <= maxTerms;
     }
 
-    private Boolean ifGreaterThanMaxTerms(Integer maxTerms){
-        return terms >= maxTerms;
-    }
-
     public void getLoanInfo(Integer maxTerms){
+        System.out.println("Enter your loan information.");
         principle = getPrincipleAmount();
-        terms = getTermsAmount();
         checkTerms(maxTerms);
 
-
+        paymentAmount = getPaymentAmount();
         interest = getInterest();
         grossIncome = getGrossIncome();
         Amortization amortization = new Amortization(principle,
@@ -50,31 +46,30 @@ public class LoanInput{
     }
 
     private Integer getPrincipleAmount(){
-        System.out.print("""
-                Enter your loan information.
-                Loan amount:\s""");
-        return Integer.parseInt(scanner.nextLine());
+        return parseInteger(singletonScanner.getString(principleInput));
     }
 
     private Integer getTermsAmount(){
-        System.out.print("Terms(year): ");
-        return Integer.parseInt(scanner.nextLine());
+        return parseInteger(singletonScanner.getString(termsInput));
     }
 
     private Integer getPaymentAmount(){
-        System.out.print("Number of payments in a single year: ");
-        return Integer.parseInt(scanner.nextLine());
+        return parseInteger(singletonScanner.getString(paymentAmountInput));
     }
 
     private Double getInterest(){
-        System.out.print("Interest rate: ");
-        return Double.parseDouble(scanner.nextLine());
+        return parseDouble(singletonScanner.getString(interestInput));
     }
 
     private Integer getGrossIncome(){
+        return parseInteger(singletonScanner.getString(grossIncomeInput));
+    }
 
-        System.out.print("Gross income: ");
-        return Integer.parseInt(scanner.nextLine());
-//        scanner.nextLine();
+    private Integer parseInteger(String value){
+        return Integer.parseInt(value);
+    }
+
+    private Double parseDouble(String value){
+        return Double.parseDouble(value);
     }
 }

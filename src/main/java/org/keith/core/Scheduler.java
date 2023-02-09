@@ -9,8 +9,8 @@ public class Scheduler{
     private Integer principle;
     private Integer endPeriod,
                     numberPayment;
-    private Double monthlyPayments;
-    private Double balance,
+    private Double monthlyPayments,
+                   balance,
                    annualInterest,
                    periodInterest,
                    principlePaid = 0.0,
@@ -33,9 +33,12 @@ public class Scheduler{
         balance = convertToDouble(principle);
         periodInterest = calculatePeriodInterest(annualInterest, numberPayment);
         for(int period = startPeriod; period <= endPeriod; period++){
-            interestPaid = balance * periodInterest;
-            principlePaid = monthlyPayments - interestPaid;
-            balance -= principlePaid;
+//            interestPaid = balance * periodInterest;
+            interestPaid = calculateInterestPaid();
+//            principlePaid = monthlyPayments - interestPaid;
+            principlePaid = calculatePrinciplePaid();
+//            balance -= principlePaid;
+            balance = calculateNewBalance();
             System.out.println("Period: " + period + ", Principle: " + formatToCurrency(principlePaid) + ", Interest: " + formatToCurrency(interestPaid) + ", Balance: " + formatToCurrency(balance));
         }
         System.out.println("Monthly Payment: " + formatToCurrency(monthlyPayments));
@@ -62,5 +65,16 @@ public class Scheduler{
     private String formatToCurrency(Double value){
         NumberFormat cf = NumberFormat.getCurrencyInstance();
         return cf.format(value);
+    }
+
+    private Double calculateInterestPaid(){
+        return balance * periodInterest;
+    }
+
+    private Double calculatePrinciplePaid(){
+        return monthlyPayments - interestPaid;
+    }
+    private Double calculateNewBalance(){
+        return balance -= principlePaid;
     }
 }

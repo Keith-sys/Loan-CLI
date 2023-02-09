@@ -5,7 +5,6 @@ import org.keith.menu.Menu;
 import java.lang.Math;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Scanner;
 
 public class Amortization extends LoanDetails {
     private final int ifFavorable = 35,
@@ -17,12 +16,13 @@ public class Amortization extends LoanDetails {
                          adequate = "Adequate",
                          highRisk = "High Risk!",
                         yes = "Y",
-                        no = "N";
-    private final String valueFormat = "0.##";
-    private final String ANSI_RESET = "\u001B[0m",
-                         ANSI_GREEN = "\u001B[32m",
-                         ANSI_RED = "\u001B[31m",
-                         ANSI_YELLOW = "\u001B[33m";
+                        no = "N",
+                        scheduleNeedInput = "Do you want a Schedule(Y/N): ",
+                        valueFormat = "0.##",
+                        ANSI_RESET = "\u001B[0m",
+                        ANSI_GREEN = "\u001B[32m",
+                        ANSI_RED = "\u001B[31m",
+                        ANSI_YELLOW = "\u001B[33m";
     private String input;
     LoanDetails loanDetails = new LoanDetails();
 
@@ -55,7 +55,7 @@ public class Amortization extends LoanDetails {
                                             loanDetails.getAnnualInterestRate(),
                                             loanDetails.getNumberPayment());
         Menu menu = new Menu();
-        getInput();
+        input = getInput();
 
         switch (input.toUpperCase()){
             case yes -> scheduler.getTable();
@@ -82,11 +82,9 @@ public class Amortization extends LoanDetails {
         return df.format(value);
     }
 
-    private void getInput(){
+    private String getInput(){
         SingletonScanner singletonScanner = SingletonScanner.getInstance();
-        Scanner scanner = singletonScanner.getScanner();
-        System.out.print("Do you want a Schedule(Y/N): ");
-        input = scanner.nextLine();
+        return singletonScanner.getString(scheduleNeedInput);
     }
 
     public Double calculateInterestInDecimals(){
